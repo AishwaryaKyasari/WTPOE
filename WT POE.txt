@@ -1,0 +1,1347 @@
+1.Create a form in HTML and validate for non-empty fields. Also, insert google map to your webpage
+
+1.index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="index.css">
+  
+</head>
+<body>
+  <div class="container">
+    <form id="form" action="/">
+      <h1 class="map">Contact Us</h1>
+      <div class="input-control">
+        <label for="uername">Name</label>
+        <input id="username" name="username" type="text">
+        <div class="error"></div>
+      </div>
+      <div class="input-control">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="text">
+        <div class="error"></div>
+      </div>
+      <div class="input-control">
+        <label for="contactnum">Contact Number</label>
+        <input id="contactnum" name="contactnum" type="text">
+        <div class="error"></div>
+      </div>
+      <div class="input-control">
+        <label for="city">City</label>
+        <input id="city" name="city" type="text">
+        <div class="error"></div>
+      </div>
+      <div class="input-control">
+        <label for="desc">Description</label>
+        <input id="desc" name="desc" type="text">
+        <div class="error"></div>
+      </div>
+      <div>
+        <input type="submit" class="submit"></input>
+      </div>
+    </form>
+  </div>
+  <div>
+    
+  </div>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121656.36432077798!2d75.8485767691437!3d17.661456923936722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc5d082b54ac5d5%3A0x3c719de6c83710d0!2sSolapur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1662831558835!5m2!1sen!2sin" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</body>
+</html>
+
+2.index.css
+input[type=text], select, textarea {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+  }
+
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+  .input-control.error input {
+    border-color: #ff3860;
+}
+.input-control .error {
+  color: #ff3860;
+  font-size: 15px;
+  height: 13px;
+}
+.input-control.success input {
+  border-color: #09c372;
+}
+  
+  /* Add a background color and some padding around the form */
+  .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  .map{
+    text-align: center;
+  }
+  
+  3.script.js
+  const form = document.getElementById('form');
+const username = document.getElementById('username');
+const email = document.getElementById('email');
+
+const city = document.getElementById('city');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    validateInputs();
+});
+
+
+const setError = (element, message) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = message;
+    inputControl.classList.add('error');
+    inputControl.classList.remove('success')
+}
+
+const setSuccess = element => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = '';
+    inputControl.classList.add('success');
+    inputControl.classList.remove('error');
+};
+
+
+const isValidEmail = email => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
+const validateInputs = () => {
+    const usernameValue = username.value.trim();
+    const emailValue = email.value.trim();
+    const cityvalue = city.value.trim();
+
+    if(usernameValue === '') {
+        setError(username, 'Username is required');
+    } else {
+        setSuccess(username);
+    }
+
+    if(emailValue === '') {
+        setError(email, 'Email is required');
+    } else if (!isValidEmail(emailValue)) {
+        setError(email, 'Provide a valid email address');
+    } else {
+        setSuccess(email);
+    }
+    if(cityvalue === ''){
+        setError(city,"Enter city");
+    }else{
+        setSuccess(city);
+    }
+};
+
+
+
+2. WAP to print strength of password field while entering the value by the user in the textbox. If length of password<8 : print password is weak If length of password>=8 : print password is strong
+
+
+password.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- HTML for the password textbox and password strength message -->
+<input type="password" id="password-input" onkeyup="updatePasswordStrength()">
+<label id="password-strength-message"></label>
+
+<!-- CSS styles for the password strength message -->
+<style>
+  #password-strength-message {
+    font-size: 16px;
+  }
+
+  #password-strength-message.weak {
+    color: red;
+  }
+
+  #password-strength-message.strong {
+    color: green;
+  }
+</style>
+
+<!-- JavaScript to calculate and display password strength -->
+<script>
+  function updatePasswordStrength() {
+    // Get the password from the textbox
+    var password = document.getElementById('password-input').value;
+
+    // Calculate the strength of the password by checking its length
+    var strength;
+    if (password.length < 8) {
+      strength = 'weak';
+    } else {
+      strength = 'strong';
+    }
+
+    // Update the password strength message
+    var message = document.getElementById('password-strength-message');
+    message.innerHTML = strength == 'weak' ? 'Password is weak' : 'Password is strong';
+    message.className = strength;
+  }
+</script>
+
+</body>
+</html>
+
+
+
+3.Write a javascript code for password field validation. Also print msg “Password is weak/ strong” based on following requirements
+1. Must contain at least one number 2. At Least one uppercase 3. At Least one lowercase letter 4. at least 8 or more characters
+
+
+
+question3.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- HTML for the password textbox and password strength message -->
+<input type="password" id="password-input" onkeyup="updatePasswordStrength()">
+<label id="password-strength-message"></label>
+
+<!-- CSS styles for the password strength message -->
+<style>
+  #password-strength-message {
+    font-size: 16px;
+  }
+
+  #password-strength-message.weak {
+    color: red;
+  }
+
+  #password-strength-message.strong {
+    color: green;
+  }
+</style>
+
+<!-- JavaScript to calculate and display password strength -->
+<script>
+  function updatePasswordStrength() {
+    // Get the password from the textbox
+    var password = document.getElementById('password-input').value;
+
+    // Validate the password using the validatePassword function
+    var strength = validatePassword(password);
+
+    // Update the password strength message
+    var message = document.getElementById('password-strength-message');
+    message.innerHTML = strength;
+    message.className = strength == 'Password is weak' ? 'weak' : 'strong';
+  }
+
+  function validatePassword(password) {
+    // Use regular expressions to check for the presence of at least one number, one uppercase letter, one lowercase letter, and a minimum length of 8 characters
+    var hasNumber = /\d/.test(password);
+    var hasUppercase = /[A-Z]/.test(password);
+    var hasLowercase = /[a-z]/.test(password);
+    var isLongEnough = password.length >= 8;
+
+    // If the password meets all of the requirements, return a message indicating that the password is strong
+    if (hasNumber && hasUppercase && hasLowercase && isLongEnough) {
+      return 'Password is strong';
+    }
+    // If the password does not meet all of the requirements, return a message indicating that the password is weak
+    else {
+      return 'Password is weak';
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+
+4. Read a XML file and parse it to display it on an HTML page. Choose an appropriate client side technology to parse XML.
+
+
+data.xml
+<?xml version="1.0"?>
+<data>
+  <element>
+    <name>Item 1</name>
+    <value>123</value>
+  </element>
+  <element>
+    <name>Item 2</name>
+    <value>456</value>
+  </element>
+  <element>
+    <name>Item 3</name>
+    <value>789</value>
+  </element>
+</data>
+
+
+index.html
+<!-- HTML element where the XML data will be displayed -->
+<div id="xml-data"></div>
+
+<script>
+  // Create an XMLHttpRequest object to load the XML file
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'data.xml', true);
+  xhr.onload = function() {
+    if (this.status == 200) {
+      // Parse the XML file using the DOMParser object
+      var parser = new DOMParser();
+      var xmlDoc = parser.parseFromString(this.responseText, 'text/xml');
+
+      // Extract the data from the XML file and format it as HTML
+      var html = '';
+      var elements = xmlDoc.getElementsByTagName('element');
+      for (var i = 0; i < elements.length; i++) {
+        var elementName = elements[i].getElementsByTagName('name')[0].textContent;
+        var elementValue = elements[i].getElementsByTagName('value')[0].textContent;
+        html += '<p>' + elementName + ': ' + elementValue + '</p>';
+      }
+
+      // Insert the HTML into the div element
+      document.getElementById('xml-data').innerHTML = html;
+    }
+  }
+  xhr.send();
+</script>
+
+
+
+5. WAP uses Python-CGI for implementing user authentication.
+
+sample.py
+#!/usr/bin/env python
+
+import cgi
+import cgitb
+import os
+import time
+
+# Enable CGI tracebacks
+cgitb.enable()
+
+# Set the default username and password
+users = {'user1': 'password1', 'user2': 'password2'}
+
+# Get the form data
+form = cgi.FieldStorage()
+username = form.getvalue('username')
+password = form.getvalue('password')
+
+# Check the credentials
+if username in users and users[username] == password:
+    # Set the cookie
+    cookie_string = '%s=%s; Expires=%s' % (
+        'login', '1', time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.gmtime(time.time() + 3600)))
+    print('Content-Type: text/html')
+    print('Set-Cookie: %s' % cookie_string)
+    print('Location: home.html')
+    print('')
+else:
+    # Display an error message
+    print('Content-Type: text/html')
+    print('')
+    print('<html>')
+    print('<body>')
+    print('<p>Error: Invalid username or password.</p>')
+    print('</body>')
+    print('</html>')
+
+
+
+user.sql
+use student_registration;
+
+create table student(
+student_id int(10) Not Null auto_increment,
+aadhar_card varchar(16) Not NUll,
+student_name varchar(25) Not null,
+student_email varchar(30) Not null,
+student_mobile bigint(10),
+student_password varchar(35) NOT Null,
+student_gender varchar(10) NOT NULL,
+primary key (student_id)
+);
+
+Insert into student values (1,0147258736980145,'Sammed Singalkar','sammedsingalkar@gmail.com',9658741238,'skfjb@554#6fu','Male');
+
+select * from student;
+
+main.py
+#!C:\Python39/python.exe
+
+
+
+import cgi
+import cgitb
+import mysql.connector
+
+cgitb.enable()  # for troubleshooting
+
+form = cgi.FieldStorage()
+
+# Connect to the MySQL database
+cnx = mysql.connector.connect(user='root', password='Iamsammed@12',
+                              host='localhost', database='student_registration', auth_plugin='mysql_native_password')
+cursor = cnx.cursor()
+
+# Get the username and password from the form
+username = form.getvalue('username')
+password = form.getvalue('password')
+
+# Check if the form has been submitted
+if username and password:
+  # Check the username and password against the database
+  query = 'SELECT * FROM student WHERE student_email = %s AND student_password = %s'
+  cursor.execute(query, (username, password))
+  if cursor.fetchone():
+    message = 'Login successful'
+  else:
+    message = 'Login failed'
+else:
+  message = ''
+
+# Close the database connection
+cursor.close()
+cnx.close()
+
+# Output the HTML page
+print('Content-type: text/html\n')
+print('<html>')
+print('<head><title>User Authentication</title></head>')
+print('<body>')
+print('<h1>User Authentication</h1>')
+print('<form method="post">')
+print('Username: <input type="text" name="username"><br>')
+print('Password: <input type="password" name="password"><br>')
+print('<input type="submit" value="Login">')
+print('</form>')
+print('<p>{}</p>'.format(message))
+print('</body></html>')
+
+
+
+6. Create a servlet application for user authentication with database connection
+
+
+home.html
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <center>
+        Home Page ( Login Successfully )
+    </center>
+    </body>
+</html>
+
+
+index.html
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <center>
+        <form action="Login" method="post">
+            <table>
+                <tr>
+                    <th>Username: </th><th><input type="text" name="username"/></th>
+                </tr>
+                
+                <tr>
+                    <th>Password: </th><th><input type="password" name="password"/></th>
+                </tr>
+                
+                <tr>
+                    <th></th>
+                    <th><input type="submit" value="login"/></th>
+                </tr>
+            </table>
+        </form>
+    </center>
+        
+    </body>
+</html>
+
+
+Login.java
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.*;
+
+
+@WebServlet(urlPatterns = {"/Login"})
+public class Login extends HttpServlet {
+
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            //access username and password
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            java.sql.Statement stmt = null;
+            //database
+            try{
+                //open connection
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3307/WT","root","Aishwarya@123");
+                
+                //get data from table using query
+                stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from login where username = '"+username+"' and password = '"+password+"' ");
+                
+                if(rs.next()){
+                    //if username and password true the goto home page
+                    response.sendRedirect("Home.html");
+                }
+                else{
+                    out.println("wrong username and password");
+                }
+                
+                con.close();
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+   
+}
+
+
+
+
+7.Create an AJAX(XmlHttpRequest Object) application for reading the student.xml file and print it in an HTML table (create student.xml file)
+
+
+app.js
+function readXML() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        displayData(this);
+      }
+    };
+    xhttp.open("GET", "students.xml", true);
+    xhttp.send();
+  }
+  
+  function displayData(xml) {
+    var i;
+    var xmlDoc = xml.responseXML;
+    var table = "";
+    var x = xmlDoc.getElementsByTagName("student");
+    for (i = 0; i < x.length; i++) {
+      table += "<tr><td>" +
+      x[i].getElementsByTagName("id")[0].childNodes[0].nodeValue +
+      "</td><td>" +
+      x[i].getElementsByTagName("name")[0].childNodes[0].nodeValue +
+      "</td><td>" +
+      x[i].getElementsByTagName("grade")[0].childNodes[0].nodeValue +
+      "</td></tr>";
+    }
+    document.getElementById("studentTable").innerHTML = table;
+  }
+  
+  readXML();
+  
+  
+  index.html
+  
+  <!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <table id="studentTable">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Grade</th>
+    </tr>
+  </table>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+students.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+  <student>
+    <id>1</id>
+    <name>John</name>
+    <grade>A</grade>
+  </student>
+  <student>
+    <id>2</id>
+    <name>Jane</name>
+    <grade>B</grade>
+  </student>
+  <student>
+    <id>3</id>
+    <name>Bob</name>
+    <grade>C</grade>
+  </student>
+</students>
+
+
+style.css
+table {
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  
+
+
+
+8.Using AJAX(XMLHttpRequest) call and GitHub API, display following content on HTML page
+1. print users 2. print all repository names of the username(username is entered by the user in HTML textbox) 3. if username is entered by the user is not present then print error message
+
+
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub User Data using Ajax</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="box">
+  <h1>GitHub User Details</h1>
+</div>
+
+<div class="container">
+  <form>
+    <div class="form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="Enter your Github username" required>
+   </div>
+    <button id="btn" type="button" onclick="getRepositories(), fetchData()">Get Data</button> 
+  </form> 
+
+  <div id="name"></div>
+  <h3 id="repo"></h3>
+  <div id="repositoryList">
+   
+  </div>
+  
+</div>
+
+  
+</body>
+</html>
+
+
+script.js
+function getRepositories() {
+    var username = document.getElementById("username").value;
+    // var username = "Sammedsingalkar"
+    
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+    
+    // Set the callback function to handle the response
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Parse the JSON response
+        var response = JSON.parse(xhr.responseText);
+        
+        var repositoryList = "";
+        document.getElementById("repo").innerText = "List of Repositories"
+          for (var i = 0; i < response.length; i++) {
+            repositoryList += "<li>" + response[i].name + "</li>";
+          }
+          document.getElementById("repositoryList").innerHTML = "<ul>" + repositoryList + "</ul>";
+      }
+      else{
+        document.getElementById('repositoryList').textContent = '';
+        document.getElementById('repo').textContent = '';
+
+      }
+    };
+    
+    // Send the request to the GitHub API
+    xhr.open("GET", "https://api.github.com/users/" + username + "/repos", true);
+    xhr.send();
+  }
+
+
+  function fetchData() {
+  var xhr = new XMLHttpRequest();
+  var username = document.getElementById("username").value;
+  xhr.open('GET', 'https://api.github.com/users/' + username);
+
+  // Set the callback function for the onreadystatechange event
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // Parse the response data
+        var data = JSON.parse(xhr.responseText);
+
+        // Extract the information you want to display
+        var name = data.name;
+
+        // Update the container element with the extracted information
+        document.getElementById('name').textContent = "Username: "+ name;
+
+      } 
+      else if (username== ""){
+        document.getElementById('name').textContent = 'Please enter username';
+
+      }
+      else {
+        document.getElementById('name').textContent = 'User Name Not found';
+      }
+    }
+  };
+  // Send the request
+  xhr.send();
+}
+
+
+style.css
+
+*{
+    padding: 0;
+    margin:0;
+}
+
+.box{
+    height: 6vh;
+    background-color: aqua;
+    text-align: center;
+    padding: 2vh;
+}
+
+.container{
+margin-left: 15vh;
+margin-right: 15vh;
+margin-top: 6vh;
+margin-bottom: 6vh;
+border: 2px solid red;
+padding-top: 8vh;
+padding-bottom:8vh;
+padding-left: 70vh;
+ /* padding-left: max(60vh,20vh);  */
+ /* padding-left: min(50vh,20vh);  */
+padding-right:40vh;
+min-height: 20vh;
+max-height: 100vh;
+}
+
+.form{
+margin-top: 4vh;
+display: table-row;
+
+
+
+}
+
+label, input{
+display: table-cell;
+/* margin-bottom: 4vh; */
+font-size: 2vh;
+
+} 
+
+label{
+font-size: larger;
+}
+
+#username{
+max-width: 55vh;
+min-width: 25vh;
+height: 5vh;
+border-radius: 4px;
+background-color: inherit;
+/* font-size: 2vh; */
+color: black;
+margin-top: 4vh;
+margin-left: 5vh;
+margin-right: 10vh;
+padding-left: 2vh;
+padding-right: 2vh;
+
+
+}
+
+#btn{
+padding: 1.5vh;
+max-width: 30vh;
+min-width:25vh;
+min-height:6vh;
+max-height:10vh;
+border-radius: 5px;
+background-color:#4934d3;
+margin-left:19vh;
+margin-top: 2vh;
+margin-bottom: 6vh;
+cursor: pointer;
+color: white;
+font-size: 2vh;
+font-weight: 500;
+font-family: sans-serif;
+}
+
+#btn:active{
+background-color:#270ade;
+}
+
+#name{
+font-size: 4vh;
+color:black;
+/* text-align: center; */
+}
+
+#repo{
+margin-top: 5vh;
+font-size: 4vh;
+}
+
+#repositoryList ul li{
+font-size: 3vh;
+}
+
+.vscode => folder
+
+setting.json
+{
+    "liveServer.settings.port": 5501
+}
+
+
+
+
+9.Implement the web application for user authentication using PHP as a server side scripting technology
+
+index.php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section style="background-color:rgb(49, 47, 47); height:100vh;">
+        <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 md:px-12 lg:px-24 lg:py-24">
+          <div class="justify-center mx-auto text-left align-bottom transition-all transform bg-white rounded-lg sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="grid flex-wrap items-center justify-center grid-cols-1 mx-auto shadow-xl lg:grid-cols-2 rounded-xl">
+              <div class="w-full px-6 py-3">
+                <div>
+                  <div class="mt-3 text-left sm:mt-5">
+                    <div class="inline-flex items-center w-full">
+                      <h3 class="text-lg font-bold text-neutral-600 l eading-6 lg:text-5xl">Login</h3>
+                    </div>
+                    <div class="mt-4 text-base text-gray-500">
+                      <p>Login and see the magic.</p>
+                    </div>
+                  </div>
+                </div>
+      
+                <form action="connection.php" method="post">
+                <div class="mt-6 space-y-2">
+                  <div>
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="text" name="email" id="email" class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300" placeholder="Enter your email" style="border:1.5px solid black;">
+                  </div>
+                  <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="text" name="password" id="password" class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300" placeholder="Enter your password" style="border:1.5px solid black;">
+                  </div>
+                  <div class="flex flex-col mt-4 lg:space-y-2">
+                    <button type="submit" class="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Log In</button>
+                    <a href="#" type="button" class="inline-flex justify-center py-4 text-base font-medium text-gray-500 focus:outline-none hover:text-neutral-600 focus:text-blue-600 sm:text-sm"> Forgot your Password? </a>
+                  </div>
+                </div>
+            </form>
+              </div>
+              <div class="order-first hidden w-full lg:block">
+                <img class="object-cover h-full bg-cover rounded-l-lg" src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+</html>
+
+
+
+connection.php
+
+<?php
+
+$conn = mysqli_connect('localhost','root','Aishwarya@123','student_registration');
+
+if(!$conn){
+    die("Connection Failed: ". $conn->connect_error());
+}
+else{
+    $username = $_POST['email'];
+    $password = $_POST['password'];
+    
+
+    $sql = "SELECT * FROM student WHERE student_email = '$username' AND student_password = '$password'";
+    $result = mysqli_query($conn,$sql);
+    
+    if($result){
+        echo 'success';
+        }else{
+        echo 'failure';
+    }
+}
+
+
+
+10.Implement the web application for student registration using PHP as a server-side scripting technology with session management
+
+
+index.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+  .error {color: #FF0000;}
+  form {margin: 0 auto; width: 250px;}
+  input[type=text], input[type=email], input[type=password] {width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box;}
+  button[type=submit] {width: 100%; background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer;}
+  button[type=submit]:hover {background-color: #45a049;}
+</style>
+
+<form action="connection.php" method="post">
+  <label for="username">Username:</label><br>
+  <input type="text" id="username" name="username" value="">
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email" value=""><br>
+  
+  <label for="password">Password:</label><br>
+  <input type="password" id="password" name="password"><br>
+  
+  <!-- <label for="confirm_password">Confirm Password:</label><br>
+  <input type="password" id="confirm_password" name="confirm_password"><br>
+   -->
+  <button type="submit" name="submit" value="submit">Submit</button>
+</form>
+</body>
+</html>
+
+
+connection.php
+<?php
+
+// $servername='localhost';
+// $username='root';
+// $password='Aishwarya@123';
+// $dbname = 'sample';
+$conn = mysqli_connect('localhost:3307','root','','sample');
+if(!$conn){
+   die("Could not Connect My Sql: ". $conn->connect_error());
+}
+else{
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password=$_POST['password'];
+    
+    // echo($username);
+    echo($email);
+    echo($password);
+
+    $sql = "insert into registration values ( '$username','$email','$password')";
+    $result = mysqli_query($conn,$sql);
+    
+    if($result){
+        echo 'success';
+        }else{
+        echo 'failure';
+    }
+}
+
+
+
+
+11.Implementation of a simple calculator using REACT JS.
+
+app.js
+
+import React, { useState } from 'react';
+
+function Calculator() {
+  const [result, setResult] = useState('');
+  const [temp, setTemp] = useState('');
+  const [operator, setOperator] = useState('');
+
+  function handleClick(event) {
+    const value = event.target.value;
+    switch (value) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        setOperator(value);
+        setTemp(result);
+        setResult('');
+        break;
+      case '=':
+        setResult(eval(temp + operator + result));
+        setTemp('');
+        setOperator('');
+        break;
+      case 'AC':
+        setResult('');
+        setTemp('');
+        setOperator('');
+        break;
+      default:
+        setResult(result + value);
+    }
+  }
+
+  return (
+    <div>
+      <input type="text" value={result} />
+      <br />
+      <button value="1" onClick={handleClick}>1</button>
+      <button value="2" onClick={handleClick}>2</button>
+      <button value="3" onClick={handleClick}>3</button>
+      <button value="+" onClick={handleClick}>+</button>
+      <br />
+      <button value="4" onClick={handleClick}>4</button>
+      <button value="5" onClick={handleClick}>5</button>
+      <button value="6" onClick={handleClick}>6</button>
+      <button value="-" onClick={handleClick}>-</button>
+      <br />
+      <button value="7" onClick={handleClick}>7</button>
+      <button value="8" onClick={handleClick}>8</button>
+      <button value="9" onClick={handleClick}>9</button>
+      <button value="*" onClick={handleClick}>*</button>
+      <br />
+      <button value="AC" onClick={handleClick}>AC</button>
+      <button value="0" onClick={handleClick}>0</button>
+      <button value="=" onClick={handleClick}>=</button>
+      <button value="/" onClick={handleClick}>/</button>
+    </div>
+  );
+}
+
+export default Calculator;
+
+
+
+
+12.Implementation of Dynamic list rendering using REACT JS
+
+app.js
+import React from 'react';
+
+function ListItem(props) {
+  const style = {
+    fontSize: '20px',
+    color: '#ff0000',
+  };
+
+  return <li style={style}>{props.value}</li>;
+}
+
+function List(props) {
+  const items = props.items;
+  const listItems = items.map((item) =>
+    <ListItem key={item.id} value={item.value} />
+  );
+  return <ul>{listItems}</ul>;
+}
+
+const data = [
+  {id: 1, value: 'Item 1'},
+  {id: 2, value: 'Item 2'},
+  {id: 3, value: 'Item 3'},
+];
+
+function App() {
+  return <List items={data} />;
+}
+
+export default App;
+
+
+13.. Implement the web application for user authentication using Node JS
+
+
+server.js
+
+const express = require('express')
+const app = express()
+const bcrypt = require('bcrypt')
+
+app.use(express.json())
+ const users = []
+
+app.get('/users',(req, res) =>
+{res.json(users)
+
+})
+
+app.post('/users',  async(req, res) =>{
+      try{
+    const hashedPassword = await bcrypt.hash(req.body.password,10)
+   
+
+    const user = { name: req.body.name , password:hashedPassword}
+    users.push(user)
+    res.status(201).send()
+}
+catch{
+    res.status(500).send()
+}
+  
+
+})
+
+app.post('/users/login',async(req,res ) =>
+{
+    const user =users.find(user => user.name = req.body.name)
+    if(user==null)
+    {
+        return res.status(400).send('cannot find user')
+    }
+    try{
+        if(await bcrypt.compare(req.body.password,user.password))
+        {
+            res.send("Sucessfully logged in")
+
+        }
+        else
+        {
+            res.send('Not allowed')
+        }
+
+    }
+    catch{
+        res.send(500).send()
+    }
+})
+  app.listen(3000)
+  
+  
+
+
+
+
+14.
+
+idex.html
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>GFG User Details</title>
+
+	<!-- INCLUDING JQUERY-->
+	<script src=
+"https://code.jquery.com/jquery-3.5.1.js">
+	</script>
+
+	<!-- CSS FOR STYLING THE PAGE -->
+	<style>
+		table {
+			margin: 0 auto;
+			font-size: large;
+			border: 1px solid black;
+		}
+
+		h1 {
+			text-align: center;
+			color: #006600;
+			font-size: xx-large;
+			font-family: 'Gill Sans',
+				'Gill Sans MT', ' Calibri',
+				'Trebuchet MS', 'sans-serif';
+		}
+
+		td {
+			background-color: #E4F5D4;
+			border: 1px solid black;
+		}
+
+		th,
+		td {
+			font-weight: bold;
+			border: 1px solid black;
+			padding: 10px;
+			text-align: center;
+		}
+
+		td {
+			font-weight: lighter;
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		<h1>GeeksForGeeks</h1>
+
+		<!-- TABLE CONSTRUCTION-->
+		<table id='table'>
+			<!-- HEADING FORMATION -->
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+
+			<script>
+				$(document).ready(function () {
+
+					// FETCHING DATA FROM JSON FILE
+					$.getJSON("student.json",
+							function (data) {
+						var student = '';
+
+						// ITERATING THROUGH OBJECTS
+						$.each(data, function (key, value) {
+
+							//CONSTRUCTION OF ROWS HAVING
+							// DATA FROM JSON OBJECT
+							student += '<tr>';
+							student += '<td>' +
+								value.id + '</td>';
+
+							student += '<td>' +
+								value.name + '</td>';
+
+
+							student += '</tr>';
+						});
+						
+						//INSERTING ROWS INTO TABLE
+						$('#table').append(student);
+					});
+				});
+			</script>
+	</section>
+</body>
+
+</html>
+
+
+.json 
+
+[{
+    "id": "1234",
+    "name": "Prathiksha"
+  },
+  {
+    "id": "456",
+    "name": "Kethki"
+  },
+  {
+    "id": "6457",
+    "name": "Sam"
+  }]
+  
+  
+
